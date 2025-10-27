@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo de Usuário - Sistema de Alertas</title>
+  <style>
+    body {
+        text-align: center;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    .flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .step {
+      background: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 2px dashed #888;
+      min-width: 250px;
+      text-align: center;
+      font-weight: bold;
+      color: #555;
+    }
+    .arrow {
+      font-size: 20px;
+      color: #888;
+    }
+    .decision {
+      background: #fdfdfd;
+      border: 2px dashed #ff9800;
+    }
+    .branch {
+      display: flex;
+      gap: 40px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .persona-info {
+       
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #2196f3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚨 Fluxo de Usuário - Sistema de Alertas</h1>
+  
+  <div class="persona-info">
+    <h3>Persona: João Silva (52 anos)</h3>
+    <p><strong>Objetivo:</strong> Receber alertas claros e próximos, proteger propriedade e família</p>
+    <p><strong>Tecnologia:</strong> WhatsApp, SMS, celular básico</p>
+  </div>
+
+  <h2>Fluxo Principal - Recebimento de Alerta</h2>
+  <div class="flow">
+    <div class="step">Início: Usuário em rotina normal</div>
+    <div class="arrow">↓</div>
+    <div class="step">Sistema detecta risco e envia notificação</div>
+    <div class="arrow">↓</div>
+    <div class="step">Usuário recebe alerta com ícone + mapa + direção do vento</div>
+    <div class="arrow">↓</div>
+    <div class="step">Lê mensagem clara com ação recomendada</div>
+    <div class="arrow">↓</div>
+    <div class="step">Toma ação (evacuar/ficar/chamar bombeiros)</div>
+    <div class="arrow">↓</div>
+    <div class="step">Sistema confirma ação e monitora situação</div>
+    <div class="arrow">↓</div>
+    <div class="step">Fim: Usuário se sente protegido</div>
+  </div>
+
+  <h2>Fluxo com Decisão - Interpretação do Alerta</h2>
+  <div class="flow">
+    <div class="step">Usuário recebe notificação</div>
+    <div class="arrow">↓</div>
+    <div class="step">Alerta sonoro alto e repetido</div>
+    <div class="arrow">↓</div>
+    <div class="step decision">Decisão: Mensagem é clara e relevante?</div>
+    <div class="branch">
+      <div class="flow">
+        <div class="step">SIM: Segue ação recomendada</div>
+        <div class="arrow">↓</div>
+        <div class="step">Confirma recebimento</div>
+        <div class="arrow">↓</div>
+        <div class="step">Fim: Sentimento de segurança</div>
+      </div>
+      <div class="flow">
+        <div class="step">NÃO: Busca mais informações</div>
+        <div class="arrow">↓</div>
+        <div class="step">Verifica outras fontes</div>
+        <div class="arrow">↓</div>
+        <div class="step">Fim: Ansiedade e desconfiança</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Fluxo com Decisão - Ação Pós-Alerta</h2>
+  <div class="flow">
+    <div class="step">Usuário entende o alerta</div>
+    <div class="arrow">↓</div>
+    <div class="step">Visualiza mapa simples e direção do vento</div>
+    <div class="arrow">↓</div>
+    <div class="step decision">Decisão: Confia na informação?</div>
+    <div class="branch">
+      <div class="flow">
+        <div class="step">SIM: Toma ação imediata</div>
+        <div class="arrow">↓</div>
+        <div class="step">Avisa vizinhos/família</div>
+        <div class="arrow">↓</div>
+        <div class="step">Fim: Alívio e proteção</div>
+      </div>
+      <div class="flow">
+        <div class="step">NÃO: Ignora ou espera</div>
+        <div class="arrow">↓</div>
+        <div class="step">Perde tempo crítico</div>
+        <div class="arrow">↓</div>
+        <div class="step">Fim: Risco aumentado</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
