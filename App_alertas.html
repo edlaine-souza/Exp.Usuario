@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Alertas - 4 Telas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: #f0f2f5;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .phone-mockup {
+            width: 360px;
+            height: 740px;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            border: 12px solid #1a1a1a;
+        }
+        
+        .screen {
+            height: 100%;
+            background: #f8f9fa;
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #1a1a1a;
+            color: white;
+            padding: 15px 25px 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        
+        /* Tela 1 - Início */
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #ee5a24;
+        }
+        
+        .status-card {
+            background: white;
+            margin: -20px 25px 20px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .features {
+            padding: 0 25px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #1976d2;
+        }
+        
+        .feature-content h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        .feature-content p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Tela 2 - Alerta Ativo */
+        .alert-header {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .alert-content {
+            padding: 25px;
+        }
+        
+        .alert-info {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .map-container {
+            background: #e0e0e0;
+            height: 200px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #ff4444;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        /* Tela 3 - Histórico */
+        .history-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .history-content {
+            padding: 25px;
+        }
+        
+        .history-list {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .history-icon.alert {
+            background: #ffebee;
+            color: #f44336;
+        }
+        
+        .history-icon.safe {
+            background: #e8f5e8;
+            color: #4caf50;
+        }
+        
+        .history-details {
+            flex: 1;
+        }
+        
+        .history-details h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        .history-details p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .history-date {
+            font-size: 11px;
+            color: #999;
+            text-align: right;
+        }
+        
+        /* Tela 4 - Configurações */
+        .settings-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .settings-content {
+            padding: 25px;
+        }
+        
+        .setting-group {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .toggle {
+            width: 50px;
+            height: 26px;
+            background: #ccc;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .toggle.active {
+            background: #4cd964;
+        }
+        
+        .toggle-handle {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+        
+        .toggle.active .toggle-handle {
+            transform: translateX(24px);
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .slider-fill {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            width: 70%;
+        }
+        
+        .slider-handle {
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            top: -7px;
+            left: 65%;
+            cursor: pointer;
+        }
+        
+        /* Navegação */
+        .nav-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .nav-text {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .nav-item.active .nav-icon {
+            background: #1976d2;
+            color: white;
+        }
+        
+        .nav-item.active .nav-text {
+            color: #1976d2;
+            font-weight: 600;
+        }
+        
+        /* Controles entre telas */
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela 1 - Início -->
+    <div class="phone-mockup">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 100% 🔋</span>
+        </div>
+        
+        <div class="screen active" id="screen1">
+            <div class="header">
+                <div class="app-icon">🔥</div>
+                <h1>Alerta Seguro</h1>
+                <p class="subtitle">Protegendo você e sua família</p>
+            </div>
+            
+            <div class="status-card">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                    <div style="width: 12px; height: 12px; background: #4cd964; border-radius: 50%;"></div>
+                    <span>Sistema Ativo</span>
+                </div>
+                <p>Monitorando sua região</p>
+                <small>Última verificação: Agora</small>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card" onclick="showScreen(2)">
+                    <div class="feature-icon">🚨</div>
+                    <div class="feature-content">
+                        <h3>Alertas Ativos</h3>
+                        <p>Ver situações de risco</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card" onclick="showScreen(3)">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-content">
+                        <h3>Histórico</h3>
+                        <p>Alertas anteriores</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card" onclick="showScreen(4)">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-content">
+                        <h3>Configurações</h3>
+                        <p>Personalize seus alertas</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🆘</div>
+                    <div class="feature-content">
+                        <h3>Emergência</h3>
+                        <p>Contatos de emergência</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-bar">
+                <div class="nav-item active" onclick="showScreen(1)">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Início</div>
+                </div>
+                <div class="nav-item" onclick="showScreen(3)">
+                    <div class="nav-icon">📋</div>
+                    <div class="nav-text">Histórico</div>
+                </div>
+                <div class="nav-item" onclick="showScreen(2)">
+                    <div class="nav-icon">🔔</div>
+                    <div class="nav-text">Alertas</div>
+                </div>
+                <div class="nav-item" onclick="showScreen(4)">
+                    <div class="nav-icon">⚙️</div>
+                    <div class="nav-text">Config</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tela 2 - Alerta Ativo -->
+        <div class="screen" id="screen2">
+            <div class="alert-header">
+                <div class="app-icon">⚠️</div>
+                <h1>Alerta Ativo</h1>
+                <p class="subtitle">Situação de emergência</p>
+            </div>
+            
+            <div class="alert-content">
+                <div class="alert-info">
+                    <h3 style="margin-bottom: 15px; color: #ff4444;">🔥 INCÊNDIO FLORESTAL</h3>
+                    
+                    <div class="info-row">
+                        <span>📍 Distância</span>
+                        <strong>2.5 km da sua localização</strong>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span>🧭 Direção</span>
+                        <strong>NORTE</strong>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span>💨 Vento</span>
+                        <strong>15 km/h → SUL</strong>
+                    </div>
+                    
+                    <div class="info-row" style="border-bottom: none;">
+                        <span>⏰ Início</span>
+                        <strong>15:30</strong>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    🗺️ Mapa de Evacuação
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary">🆘 Ligar Bombeiros</button>
+                    <button class="btn btn-secondary" onclick="showScreen(1)">Voltar</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tela 3 - Histórico -->
+        <div class="screen" id="screen3">
+            <div class="history-header">
+                <div class="app-icon">📋</div>
+                <h1>Histórico</h1>
+                <p class="subtitle">Alertas anteriores</p>
+            </div>
+            
+            <div class="history-content">
+                <div class="history-list">
+                    <div class="history-item">
+                        <div class="history-icon alert">⚠️</div>
+                        <div class="history-details">
+                            <h4>Incêndio Florestal</h4>
+                            <p>2.5 km da sua localização</p>
+                        </div>
+                        <div class="history-date">Hoje<br>15:30</div>
+                    </div>
+                    
+                    <div class="history-item">
+                        <div class="history-icon safe">✅</div>
+                        <div class="history-details">
+                            <h4>Alagamento</h4>
+                            <p>5 km da sua localização</p>
+                        </div>
+                        <div class="history-date">10/Out<br>14:15</div>
+                    </div>
+                    
+                    <div class="history-item">
+                        <div class="history-icon alert">⚠️</div>
+                        <div class="history-details">
+                            <h4>Incêndio</h4>
+                            <p>7 km da sua localização</p>
+                        </div>
+                        <div class="history-date">05/Out<br>11:45</div>
+                    </div>
+                    
+                    <div class="history-item">
+                        <div class="history-icon safe">✅</div>
+                        <div class="history-details">
+                            <h4>Temporal</h4>
+                            <p>4 km da sua localização</p>
+                        </div>
+                        <div class="history-date">01/Out<br>09:20</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="showScreen(1)" style="flex: none; padding: 15px 30px; margin-top: 20px;">Voltar ao Início</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela 4 - Configurações -->
+        <div class="screen" id="screen4">
+            <div class="settings-header">
+                <div class="app-icon">⚙️</div>
+                <h1>Configurações</h1>
+                <p class="subtitle">Personalize seu app</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3 style="margin-bottom: 15px;">🔔 Notificações</h3>
+                    
+                    <div class="setting-item">
+                        <span>Alertas Sonoros</span>
+                        <div class="toggle active" onclick="toggleThis(this)">
+                            <div class="toggle-handle"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span>Notificações Push</span>
+                        <div class="toggle active" onclick="toggleThis(this)">
+                            <div class="toggle-handle"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span>Vibrar</span>
+                        <div class="toggle" onclick="toggleThis(this)">
+                            <div class="toggle-handle"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3 style="margin-bottom: 15px;">📍 Localização</h3>
+                    
+                    <div class="setting-item">
+                        <span>Raio de Alerta</span>
+                        <strong>10 km</strong>
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <div class="slider">
+                            <div class="slider-fill"></div>
+                            <div class="slider-handle"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #666;">
+                            <span>1 km</span>
+                            <span>5 km</span>
+                            <span>10 km</span>
+                            <span>20 km</span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span>Precisão</span>
+                        <strong>Alta</strong>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3 style="margin-bottom: 15px;">👤 Perfil</h3>
+                    
+                    <div class="setting-item">
+                        <span>Nome</span>
+                        <strong>João Silva</strong>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span>Região</span>
+                        <strong>Zona Rural</strong>
+                    </div>
+                    
+                    <div class="setting-item" style="border-bottom: none;">
+                        <span>Versão do App</span>
+                        <strong>2.1.0</strong>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="showScreen(1)" style="flex: none; padding: 15px 30px;">Voltar ao Início</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" onclick="showScreen(1)">Tela 1 - Início</button>
+        <button class="control-btn" onclick="showScreen(2)">Tela 2 - Alerta</button>
+        <button class="control-btn" onclick="showScreen(3)">Tela 3 - Histórico</button>
+        <button class="control-btn" onclick="showScreen(4)">Tela 4 - Config</button>
+    </div>
+
+    <script>
+        function showScreen(screenNumber) {
+            // Esconde todas as telas
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Mostra a tela selecionada
+            document.getElementById('screen' + screenNumber).classList.add('active');
+            
+            // Atualiza navegação
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+        
+        function toggleThis(element) {
+            element.classList.toggle('active');
+        }
+        
+        // Inicializa toggles
+        document.querySelectorAll('.toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
